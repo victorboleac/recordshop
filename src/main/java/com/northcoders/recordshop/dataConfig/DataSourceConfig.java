@@ -11,32 +11,33 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-
+//TODO: make it SOLID!!
 // https://www.baeldung.com/spring-boot-configure-data-source-programmatic
-// https://www.baeldung.com/spring-value-annotation
 
 @Configuration
 public class DataSourceConfig {
+
     @Value("${spring.datasource.url}")
     private String postgresUrl;
+
     @Value("${spring.datasource.username}")
     private String postgresUsername;
+
     @Value("${spring.datasource.password}")
     private String postgresPassword;
-    @Value("${spring.datasource.driver-class-name}")
-    private String postgresDriverClassName;
-    @Value("${spring.datasource.h2.url}")
-    private String h2Url;
-    @Value("${spring.datasource.h2.username}")
-    private String h2Username;
-    @Value("${spring.datasource.h2.password}")
-    private String h2Password;
-    @Value("${spring.datasource.h2.driver-class-name}")
-    private String h2DriverClassName;
 
+    @Value("${spring.datasource.driver-class-name}")
+    private String postgresDriver;
 
     @Bean
     public DataSource dataSource() {
+
+
+        String h2Url = "jdbc:h2:mem:record_shop";
+        String h2Username = "sa";
+        String h2Password = "";
+        String h2Driver = "org.h2.Driver";
+
         try{
             System.out.println("Trying to connect to local postgres DB");
             Connection connection = DriverManager.getConnection(postgresUrl, postgresUsername, postgresPassword);
@@ -47,7 +48,7 @@ public class DataSourceConfig {
                         .url(postgresUrl)
                         .username(postgresUsername)
                         .password(postgresPassword)
-                        .driverClassName(postgresDriverClassName)
+                        .driverClassName(postgresDriver)
                         .build();
             }
         }catch (SQLException e) {
@@ -55,11 +56,13 @@ public class DataSourceConfig {
             System.out.println(e.getMessage());
         }
         System.out.println("Trying to connect to H2 inMemory DB...");
-        return  DataSourceBuilder.create()
+        DataSource dbConnection = DataSourceBuilder.create()
                 .url(h2Url)
                 .username(h2Username)
                 .password(h2Password)
-                .driverClassName(h2DriverClassName)
+                .driverClassName(h2Driver)
                 .build();
+        System.out.println("Successfully connected to H2 inMemory DB");
+        return dbConnection;
     }
 }
