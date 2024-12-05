@@ -10,6 +10,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+
+// https://www.baeldung.com/spring-boot-configure-data-source-programmatic
+// https://www.baeldung.com/spring-value-annotation
+
 @Configuration
 public class DataSourceConfig {
     @Value("${spring.datasource.url}")
