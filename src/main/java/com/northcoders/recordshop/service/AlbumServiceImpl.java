@@ -18,7 +18,7 @@ public class AlbumServiceImpl  implements AlbumService {
     AlbumManagerRepository albumManagerRepository;
 
     @Autowired
-    ArtistManagerRepository artistManagerRepository;
+    private ArtistServiceImpl artistServiceImpl;
 
 
     @Override
@@ -38,18 +38,12 @@ public class AlbumServiceImpl  implements AlbumService {
         return albumManagerRepository.save(album);
     }
 
-    //TODO: move the logic for add artist and find artist into ArtistService
+    //TODO: move the logic for add artist and find artist into ArtistService - DONE
     @Override
     public Album addAlbum(Album album) {
         Artist artist = album.getArtist();
-        Optional<Artist> existingArtist = artistManagerRepository.findByName(artist.getName());
-        if(existingArtist.isPresent()) album.setArtist(existingArtist.get());
-        else {
-            Artist newArtist = Artist.builder()
-                    .name(artist.getName())
-                    .build();
-            album.setArtist(artistManagerRepository.save(newArtist));
-        }
+        if(artistServiceImpl.checkArtistByName(artist.getName())) album.setArtist(artist);
+        else album.setArtist(artistServiceImpl.addArtist(artist));
         return updateAlbum(album);
     }
 
