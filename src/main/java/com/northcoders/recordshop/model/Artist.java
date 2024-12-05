@@ -19,11 +19,14 @@ public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     String name;
 
     @Column
     String country;
+
+
 }

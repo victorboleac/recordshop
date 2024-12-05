@@ -3,7 +3,6 @@ package com.northcoders.recordshop.service;
 import com.northcoders.recordshop.model.Album;
 import com.northcoders.recordshop.model.Artist;
 import com.northcoders.recordshop.repository.AlbumManagerRepository;
-import com.northcoders.recordshop.repository.ArtistManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
