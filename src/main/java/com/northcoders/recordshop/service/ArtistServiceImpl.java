@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArtistServiceImpl implements ArtistService {
 
-    @Autowired
-    ArtistManagerRepository artistManagerRepository;
 
+    private final ArtistManagerRepository artistManagerRepository;
+
+    @Autowired
+    public ArtistServiceImpl(ArtistManagerRepository artistManagerRepository) {
+        this.artistManagerRepository = artistManagerRepository;
+    }
     @Override
     public boolean checkArtistByName(String artistName) {
         return artistManagerRepository.findByName(artistName)
