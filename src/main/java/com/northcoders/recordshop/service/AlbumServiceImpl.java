@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class AlbumServiceImpl  implements AlbumService {
 
-//https://www.geeksforgeeks.org/why-is-field-injection-not-recommended-in-spring/
+// NOTE: https://www.geeksforgeeks.org/why-is-field-injection-not-recommended-in-spring/
 
     private final AlbumManagerRepository albumManagerRepository;
     private final ArtistServiceImpl artistServiceImpl;
