@@ -62,4 +62,17 @@ class AlbumControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedAlbums, response.getBody());
     }
+    @Test
+    @DisplayName("GET /api/v1/albums - converts null response from service")
+    void testGetAllAlbums_ServiceReturnsNull() {
+        // Arrange
+        when(albumService.getAllAlbums()).thenReturn(null);
+
+        // Act
+        ResponseEntity<List<Album>> response = albumController.getAllAlbums();
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(0, response.getBody().size());
+    }
 }
