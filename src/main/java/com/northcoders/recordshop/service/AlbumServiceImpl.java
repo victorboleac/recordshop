@@ -2,6 +2,7 @@ package com.northcoders.recordshop.service;
 
 import com.northcoders.recordshop.model.Album;
 import com.northcoders.recordshop.model.Artist;
+import com.northcoders.recordshop.model.Genre;
 import com.northcoders.recordshop.repository.AlbumManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,4 +59,16 @@ public class AlbumServiceImpl  implements AlbumService {
         if(album.isPresent()) albumManagerRepository.deleteById(id);
         return album;
     }
+
+    @Override
+    public List<Album> searchAlbums(String artistName, Integer releaseYear, Genre genre, String albumName) {
+        if (artistName != null)  return albumManagerRepository.findByArtistName(artistName);
+        if (releaseYear!= null) return  albumManagerRepository.findByReleaseYear(releaseYear);
+        if (genre != null) return albumManagerRepository.findByGenre(genre);
+        if (albumName!=null) return albumManagerRepository.findByNameContainingIgnoreCase(albumName);
+
+        return new ArrayList<>();
+    }
+
+
 }
