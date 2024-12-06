@@ -174,18 +174,21 @@ class AlbumControllerTest {
     void testCreateAlbum_UpdatesAlbum() {
         //Arrange
         Long albumId = 1L;
-        Album album =  new Album(null, "The Razors Edge", 1990, Genre.ROCK,
+        Album existingAlbum = new Album(albumId, "The Razors Edge", 1990, Genre.ROCK,
                 new Artist(1L, "AC/DC", "Australia"));
-
         Album updatedAlbum = new Album(albumId, "The Edge", 1990, Genre.ROCK,
                 new Artist(1L, "AC/DC", "Australia"));
-        when(albumService.addAlbum(album)).thenReturn(album);
-        when(albumService.updateAlbum(album)).thenReturn(updatedAlbum);
 
-        //Act
-        ResponseEntity<Album> result = albumController.updateAlbum(album);
-        //Assert
-        assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals(updatedAlbum, result.getBody());
+        when(albumService.getAlbumById(albumId)).thenReturn(Optional.of(existingAlbum));
+        when(albumService.updateAlbum(updatedAlbum)).thenReturn(updatedAlbum);
+
+        // act
+        ResponseEntity<Album> response = albumController.updateAlbum(albumId,updatedAlbum);
+
+        // assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(updatedAlbum, response.getBody());
+
+
     }
 }
