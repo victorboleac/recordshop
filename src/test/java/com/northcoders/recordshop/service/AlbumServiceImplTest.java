@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -70,6 +69,20 @@ class AlbumServiceImplTest {
 
     }
 
+    @Test
+    @DisplayName("deleteAlbumById() returns Optional (empty) when the album does not exist")
+    void testDeleteAlbumById_NoAlbum() {
+        //ARRANGE
+        Long albumId = 1L;
+        when(albumManagerRepository.findById(albumId)).thenReturn(Optional.empty());
+
+        //ACT
+        Optional<Album> actualResult = albumServiceImpl.deleteAlbumById(albumId);
+        //ASEERT
+        assertThat(actualResult).isEmpty();
+        verify(albumManagerRepository, times(0)).deleteById(albumId);
+
+    }
 
 }
 
