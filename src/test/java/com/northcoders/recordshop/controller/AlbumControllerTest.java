@@ -159,4 +159,18 @@ class AlbumControllerTest {
         assertEquals(createdAlbum, result.getBody());
 
     }
+
+    @Test
+    @DisplayName("POST /api/v1/albums - returns 400 when album data is invalid")
+    void testPostAlbums_Returns400WhenAlbumDataIsInvalid() {
+        //Arrange
+        Album invalidAlbum = new Album(null, null, 0, null, null);
+
+        //Act
+        ResponseEntity<Album> response = albumController.createAlbum(invalidAlbum);
+
+        //Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+    }
 }
