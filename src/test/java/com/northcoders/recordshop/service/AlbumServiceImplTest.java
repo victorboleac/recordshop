@@ -39,5 +39,18 @@ class AlbumServiceImplTest {
 
     }
 
+    @Test
+    @DisplayName("getAllAlbums() returns an empty list when there are no albums ")
+    void testGetAllAlbums_NoAlbums() {
+        // ARRANGE
+        when(albumManagerRepository.findAll()).thenReturn(new ArrayList<>());
+
+        // ACT
+        List<Album> actualResult = albumServiceImpl.getAllAlbums();
+
+        // ASSERT
+        assertThat(actualResult).isEmpty();
+    }
+
 }
 
