@@ -191,4 +191,20 @@ class AlbumControllerTest {
 
 
     }
+    @Test
+    @DisplayName("PUT /api/v1/albums/{id} - 404 when album is not found")
+    void testUpdateAlbum_NotFoundWhenAlbumIsNotFound() {
+        //arrange
+        Long albumId = 1L;
+        Album updatedAlbum = new Album(albumId, "The Edge", 1990, Genre.ROCK,
+                new Artist(1L, "AC/DC", "Australia"));
+
+        when(albumService.getAlbumById(albumId)).thenReturn(Optional.empty());
+
+        // act
+        ResponseEntity<Album> response = albumController.updateAlbum(albumId,updatedAlbum);
+
+        //assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
 }
