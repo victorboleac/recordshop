@@ -37,7 +37,8 @@ public class AlbumController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Album> getAlbumById(@PathVariable Long id) {
-        Optional<Album> album = albumService.getAlbumById(id);
-        return new ResponseEntity<>(album.orElse(null),HttpStatus.OK);
+        return albumService.getAlbumById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

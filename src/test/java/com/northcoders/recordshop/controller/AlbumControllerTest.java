@@ -112,4 +112,19 @@ class AlbumControllerTest {
         assertEquals(resultAlbum, response.getBody());
     }
 
+    @Test
+    @DisplayName("GET /api/v1/albums/{id}  returns 404 when the album is not found")
+    void testGetAlbumById_Returns404WhenTheAlbumIsNotFound() {
+        //Arrange
+        Long albumId = 1L;
+        when(albumService.getAlbumById(albumId)).thenReturn(Optional.empty());
+
+        //ACT
+        ResponseEntity<Album> response = albumController.getAlbumById(albumId);
+
+        //Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+
 }
