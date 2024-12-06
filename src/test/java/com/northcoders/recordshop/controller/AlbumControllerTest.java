@@ -223,4 +223,25 @@ class AlbumControllerTest {
         //assert
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
+
+    @Test
+    @DisplayName("DELETE /api/v1/albums/{id} - deletes an album")
+    void testDeleteAlbum_DeletesAlbum() {
+        //Arrange
+        Long albumId = 1L;
+        Album album = new Album(albumId, "The Edge", 1990, Genre.ROCK,
+                new Artist(1L, "AC/DC", "Australia"));
+        when(albumService.deleteAlbumById(albumId)).thenReturn(Optional.of(album));
+
+
+        //act
+
+        ResponseEntity<?> response = albumController.deleteAlbum(albumId);
+
+        //Asser
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Album with id: " + albumId + " was deleted", response.getBody());
+
+    }
+
 }

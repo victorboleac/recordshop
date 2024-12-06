@@ -61,4 +61,12 @@ public class AlbumController {
         if (Objects.equals(album.getId(), id)) return new ResponseEntity<>(albumService.updateAlbum(album),HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAlbum(@PathVariable Long id) {
+        if (albumService.deleteAlbumById(id).isPresent())
+            return new ResponseEntity<>("Album with id: "+ id +" was deleted",HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
 }
