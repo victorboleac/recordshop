@@ -207,4 +207,20 @@ class AlbumControllerTest {
         //assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+    @Test
+    @DisplayName("PUT /api/v1/albums/{id} - 500 when album ID's are not matching")
+    void testUpdateAlbum_ThrowsExceptionWhenAlbumIsNotFound() {
+        // Arrange
+        Long albumId = 1L;
+        Album updatedAlbum = new Album(2L, "The Edge", 1990, Genre.ROCK,
+                new Artist(1L, "AC/DC", "Australia"));
+
+        when(albumService.getAlbumById(albumId)).thenReturn(Optional.of(updatedAlbum));
+
+        //act
+        ResponseEntity<Album> response = albumController.updateAlbum(albumId,updatedAlbum);
+
+        //assert
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
 }
