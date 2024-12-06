@@ -35,4 +35,19 @@ class ArtistServiceImplTest {
         assertThat(result).isTrue();
         verify(artistManagerRepository, times(1)).findByName(artistName);
     }
+
+    @Test
+    @DisplayName("checkArtistByName() returns false when artist does not exist")
+    void testCheckArtistByName_ArtistDoesNotExist() {
+        // Arrange
+        String artistName = "Sex Pistols";
+        when(artistManagerRepository.findByName(artistName)).thenReturn(Optional.empty());
+
+        // Act
+        boolean result = artistServiceImpl.checkArtistByName(artistName);
+
+        // Assert
+        assertThat(result).isFalse();
+        verify(artistManagerRepository, times(1)).findByName(artistName);
+    }
 }
