@@ -48,7 +48,7 @@ public class AlbumServiceImpl  implements AlbumService {
         Artist artist = album.getArtist();
         if(artistServiceImpl.checkArtistByName(artist.getName())) album.setArtist(artist);
         else album.setArtist(artistServiceImpl.addArtist(artist));
-        return updateAlbum(album);
+        return albumManagerRepository.save(album);
     }
 
     @Override
