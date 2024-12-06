@@ -48,6 +48,17 @@ class ArtistServiceImplTest {
     }
 
     @Test
+    @DisplayName("checkArtistByName() returns false when artist name is empty")
+    void testCheckArtistByName_EmptyString() {
+        // Act
+        boolean result = artistServiceImpl.checkArtistByName("");
+
+        // Assert
+        assertThat(result).isFalse();
+        verify(artistManagerRepository, never()).findByName(any());
+    }
+
+    @Test
     @DisplayName("checkArtistByName() returns false when artist does not exist")
     void testCheckArtistByName_ArtistDoesNotExist() {
         // Arrange
