@@ -50,4 +50,23 @@ class ArtistServiceImplTest {
         assertThat(result).isFalse();
         verify(artistManagerRepository, times(1)).findByName(artistName);
     }
+
+    @Test
+    @DisplayName("addArtist() adds a new artist")
+    void testAddArtist() {
+        // Arrange
+        Artist newArtist = new Artist(null, "AC/DC", "Australia");
+        Artist savedArtist = new Artist(1L, "AC/DC", "Australia");
+        when(artistManagerRepository.save(newArtist)).thenReturn(savedArtist);
+
+        // Act
+        Artist result = artistServiceImpl.addArtist(newArtist);
+
+        // Assert
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.getName()).isEqualTo("AC/DC");
+        assertThat(result.getCountry()).isEqualTo("Australia");
+        verify(artistManagerRepository, times(1)).save(newArtist);
+    }
 }

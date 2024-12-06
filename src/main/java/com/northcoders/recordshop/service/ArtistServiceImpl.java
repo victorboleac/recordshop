@@ -17,8 +17,10 @@ public class ArtistServiceImpl implements ArtistService {
     }
     @Override
     public boolean checkArtistByName(String artistName) {
-        return artistManagerRepository.findByName(artistName)
-                .isPresent();
+        if (artistName == null || artistName.trim().isEmpty()) {
+            return false;
+        }
+        return artistManagerRepository.findByName(artistName).isPresent();
     }
 
     @Override
