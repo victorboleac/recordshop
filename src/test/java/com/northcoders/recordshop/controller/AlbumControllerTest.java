@@ -152,7 +152,7 @@ class AlbumControllerTest {
         when(albumService.addAlbum(album)).thenReturn(createdAlbum);
 
         //act
-        ResponseEntity<Album> result = albumController.addAlbum(album);
+        ResponseEntity<Album> result = albumController.createAlbum(album);
 
         //assert
         assertEquals(HttpStatus.CREATED, result.getStatusCode());
