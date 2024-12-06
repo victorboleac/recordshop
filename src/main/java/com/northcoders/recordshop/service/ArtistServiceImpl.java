@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArtistServiceImpl implements ArtistService {
 
-
-    private final ArtistManagerRepository artistManagerRepository;
-
     @Autowired
-    public ArtistServiceImpl(ArtistManagerRepository artistManagerRepository) {
-        this.artistManagerRepository = artistManagerRepository;
-    }
+    ArtistManagerRepository artistManagerRepository;
+
+ //   @Autowired
+//    public ArtistServiceImpl(ArtistManagerRepository artistManagerRepository) {
+//        this.artistManagerRepository = artistManagerRepository;
+//    }
     @Override
     public boolean checkArtistByName(String artistName) {
         if (artistName == null || artistName.trim().isEmpty()) {

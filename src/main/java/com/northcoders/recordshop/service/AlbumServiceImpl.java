@@ -14,15 +14,16 @@ import java.util.Optional;
 public class AlbumServiceImpl  implements AlbumService {
 
 // NOTE: https://www.geeksforgeeks.org/why-is-field-injection-not-recommended-in-spring/
-
-    private final AlbumManagerRepository albumManagerRepository;
-    private final ArtistServiceImpl artistServiceImpl;
-
     @Autowired
-    public AlbumServiceImpl(AlbumManagerRepository albumManagerRepository, ArtistServiceImpl artistServiceImpl) {
-        this.albumManagerRepository = albumManagerRepository;
-        this.artistServiceImpl = artistServiceImpl;
-    }
+    AlbumManagerRepository albumManagerRepository;
+    @Autowired
+    ArtistServiceImpl artistServiceImpl;
+
+//    @Autowired
+//    public AlbumServiceImpl(AlbumManagerRepository albumManagerRepository, ArtistServiceImpl artistServiceImpl) {
+//        this.albumManagerRepository = albumManagerRepository;
+//        this.artistServiceImpl = artistServiceImpl;
+//    }
 
 
     @Override

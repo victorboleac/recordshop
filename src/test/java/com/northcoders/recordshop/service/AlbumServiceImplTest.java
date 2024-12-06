@@ -31,6 +31,7 @@ class AlbumServiceImplTest {
     private AlbumServiceImpl albumServiceImpl;
 
 
+
     @Test
     @DisplayName("getAllAlbums() returns list of albums")
     void testGetAllAlbums() {
@@ -113,25 +114,27 @@ class AlbumServiceImplTest {
         verify(albumManagerRepository, times(1)).deleteById(albumId);
     }
 
-//    @Test
-//    @DisplayName("addAlbum() creating a new album when with an existing artist")
-//    void testAddAlbum_WithAnExistingArtist() {
-//        //Arrange
-//        Artist existingArtist = new Artist(1L, "AC/DC", "Australia");
-//        Album newAlbum = new Album(1L, "The Razors Edge", 1990, Genre.ROCK, existingArtist);
-//
-//
-//        when(artistManagerRepository.findByName(existingArtist.getName())).thenReturn(Optional.of(existingArtist));
-//        when(albumManagerRepository.save(newAlbum)).thenReturn(newAlbum);
-//
-//        // Act
-//        Album actualResult = albumServiceImpl.addAlbum(newAlbum);
-//
-//        // Assert
-//        assertThat(actualResult).isNotNull();
-//        assertThat(actualResult.getArtist()).isEqualTo(existingArtist);
-//
-//
-//    }
+    @Test
+    @DisplayName("addAlbum() creating a new album when with an existing artist")
+    void testAddAlbum_WithAnExistingArtist() {
+
+        //Arrange
+        Artist existingArtist = new Artist(1L, "AC/DC", "Australia");
+        Album newAlbum = new Album(1L, "The Razors Edge", 1990, Genre.ROCK, existingArtist);
+
+
+        when(artistManagerRepository.findByName(existingArtist.getName())).thenReturn(Optional.of(existingArtist));
+        when(albumManagerRepository.save(newAlbum)).thenReturn(newAlbum);
+
+        // Act
+
+        Album actualResult = albumServiceImpl.addAlbum(newAlbum);
+
+        // Assert
+        assertThat(actualResult).isNotNull();
+        assertThat(actualResult.getArtist()).isEqualTo(existingArtist);
+
+
+    }
 }
 

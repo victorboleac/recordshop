@@ -16,9 +16,10 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -62,6 +63,7 @@ class AlbumControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedAlbums, response.getBody());
     }
+
     @Test
     @DisplayName("GET /api/v1/albums - converts null response from service")
     void testGetAllAlbums_ServiceReturnsNull() {
@@ -75,4 +77,39 @@ class AlbumControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(0, response.getBody().size());
     }
+
+    @Test
+    @DisplayName("GET /api/v1/albums - Handles service exception ")
+    void testGetAllAlbums_ServiceException() {
+        // Arrange
+        when(albumService.getAllAlbums()).thenThrow(new RuntimeException("DB not working"));
+
+        // Act
+        ResponseEntity<List<Album>> response;
+        try {
+            response = albumController.getAllAlbums();
+        } catch (RuntimeException ex) {
+            response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        // Assert
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+    @Test
+    @DisplayName("GET /api/v1/albums/{id} - returns the album if found by id")
+    void testGetAlbumById_ReturnsAlbumIfFoundById() {
+
+        //Arrange
+        Long albumId = 1L;
+        Album resultAlbum = new Album(albumId, "The Razors Edge", 1990, Genre.ROCK,
+                new Artist(1L, "AC/DC", "Australia"));
+        when(albumService.getAlbumById(albumId)).thenReturn(Optional.of(resultAlbum));
+        //Act
+        ResponseEntity<Album> response = albumController.getAlbumById(albumId);
+
+        //Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(resultAlbum, response.getBody());
+    }
+
 }
