@@ -48,4 +48,18 @@ class AlbumControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedAlbums, response.getBody());
     }
+    @Test
+    @DisplayName("GET /api/v1/albums - Returns an empty list ")
+    public void testGetAllAlbums_ReturnsEmptyList() {
+        // Arrange
+        List<Album> expectedAlbums = new ArrayList<>();
+        when(albumService.getAllAlbums()).thenReturn(expectedAlbums);
+
+        // Act
+        ResponseEntity<List<Album>> response = albumController.getAllAlbums();
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedAlbums, response.getBody());
+    }
 }
