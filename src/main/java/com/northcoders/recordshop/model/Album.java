@@ -33,4 +33,5 @@ public class Album {
     @JoinColumn(name="artist_id", nullable = false)
     Artist artist;
 
+
 }
