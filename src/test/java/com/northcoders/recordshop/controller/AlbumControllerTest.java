@@ -209,7 +209,7 @@ class AlbumControllerTest {
     }
     @Test
     @DisplayName("PUT /api/v1/albums/{id} - 500 when album ID's are not matching")
-    void testUpdateAlbum_ThrowsExceptionWhenAlbumIsNotFound() {
+    void testUpdateAlbum_InternalServerErrorWhenAlbumIsNotFound() {
         // Arrange
         Long albumId = 1L;
         Album updatedAlbum = new Album(2L, "The Edge", 1990, Genre.ROCK,
@@ -242,6 +242,19 @@ class AlbumControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Album with id: " + albumId + " was deleted", response.getBody());
 
+    }
+    @Test
+    @DisplayName("DELETE /api/v1/albums/{id} - return 400 when the album does not exist")
+    void testDeleteAlbum_Return400WhenAlbumDoesNotExist() {
+        //arrange
+        Long albumId = 300L;
+        when(albumService.deleteAlbumById(albumId)).thenReturn(Optional.empty());
+
+        //act
+        ResponseEntity<?> response = albumController.deleteAlbum(albumId);
+
+        //assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
 }
