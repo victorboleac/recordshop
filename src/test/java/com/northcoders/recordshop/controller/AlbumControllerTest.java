@@ -169,5 +169,23 @@ class AlbumControllerTest {
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
+    @Test
+    @DisplayName("POST /api/v1/albums{id} -  updates and existing album")
+    void testCreateAlbum_UpdatesAlbum() {
+        //Arrange
+        Long albumId = 1L;
+        Album album =  new Album(null, "The Razors Edge", 1990, Genre.ROCK,
+                new Artist(1L, "AC/DC", "Australia"));
 
+        Album updatedAlbum = new Album(albumId, "The Edge", 1990, Genre.ROCK,
+                new Artist(1L, "AC/DC", "Australia"));
+        when(albumService.addAlbum(album)).thenReturn(album);
+        when(albumService.updateAlbum(album)).thenReturn(updatedAlbum);
+
+        //Act
+        ResponseEntity<Album> result = albumController.updateAlbum(album);
+        //Assert
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(updatedAlbum, result.getBody());
+    }
 }
