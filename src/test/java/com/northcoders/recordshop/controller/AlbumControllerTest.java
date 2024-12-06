@@ -126,5 +126,17 @@ class AlbumControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    @Test
+    @DisplayName("GET /api/v1/albums/{id} - with invalid id, returns 404")
+    void testGetAlbumById_WithInvalidId() {
+        // Arrange
+        Long albumId = -1L;
+        when(albumService.getAlbumById(albumId)).thenReturn(Optional.empty());
 
+        //ACT
+        ResponseEntity<Album> response = albumController.getAlbumById(albumId);
+
+        //Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
 }
