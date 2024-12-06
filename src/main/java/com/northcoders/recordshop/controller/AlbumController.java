@@ -71,7 +71,7 @@ public class AlbumController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/albums/search")
+    @GetMapping("/search")
     public ResponseEntity<?> searchAlbums(@RequestParam(required = false) String artistName,
                                           @RequestParam(required = false) Integer releaseYear,
                                           @RequestParam(required = false) Genre genre,
