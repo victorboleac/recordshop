@@ -1,4 +1,4 @@
 package com.northcoders.recordshop.service;
 
-public interface AvailabilityManagerService {
+public interface StockManagerService {
 }

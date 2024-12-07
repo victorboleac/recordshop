@@ -7,13 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="availability")
+@Table(name="stock_manager")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Availability {
 
+public class StockManager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class AlbumServiceImpl  implements AlbumService {
 
-// NOTE: https://www.geeksforgeeks.org/why-is-field-injection-not-recommended-in-spring/
+    // NOTE: https://www.geeksforgeeks.org/why-is-field-injection-not-recommended-in-spring/
     @Autowired
     AlbumManagerRepository albumManagerRepository;
     @Autowired

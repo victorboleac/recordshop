@@ -10,22 +10,24 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
+@SpringBootTest
 class AlbumServiceImplTest {
     @Mock
     private AlbumManagerRepository albumManagerRepository;
 
     @Mock
-    private ArtistManagerRepository artistManagerRepository;
-
-    @InjectMocks
     private ArtistServiceImpl artistServiceImpl;
+
 
     @InjectMocks
     private AlbumServiceImpl albumServiceImpl;
@@ -114,27 +116,23 @@ class AlbumServiceImplTest {
         verify(albumManagerRepository, times(1)).deleteById(albumId);
     }
 
-//    @Test
-//    @DisplayName("addAlbum() creating a new album when with an existing artist")
-//    void testAddAlbum_WithAnExistingArtist() {
-//
-//        //Arrange
-//        Artist existingArtist = new Artist(1L, "AC/DC", "Australia");
-//        Album newAlbum = new Album(1L, "The Razors Edge", 1990, Genre.ROCK, existingArtist);
-//
-//
-//        when(artistManagerRepository.findByName(existingArtist.getName())).thenReturn(Optional.of(existingArtist));
-//        when(albumManagerRepository.save(newAlbum)).thenReturn(newAlbum);
-//
-//        // Act
-//
-//        Album actualResult = albumServiceImpl.addAlbum(newAlbum);
-//
-//        // Assert
-//        assertThat(actualResult).isNotNull();
-//        assertThat(actualResult.getArtist()).isEqualTo(existingArtist);
-//
-//
-//    }
+    @Test
+    void testAddAlbum_ExistingArtist() {
+        Artist artist = new Artist();
+        artist.setName("Existing Artist");
+
+        Album album = new Album();
+        album.setArtist(artist);
+
+        when(artistServiceImpl.checkArtistByName("Existing Artist")).thenReturn(true);
+
+        when(albumManagerRepository.save(album)).thenReturn(album);
+
+        Album result = albumServiceImpl.addAlbum(album);
+
+        assertEquals(artist, result.getArtist());
+        verify(artistServiceImpl, times(1)).checkArtistByName("Existing Artist");
+        verify(albumManagerRepository, times(1)).save(album);
+    }
 }
 

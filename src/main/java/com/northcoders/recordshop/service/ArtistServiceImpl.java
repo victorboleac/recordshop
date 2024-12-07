@@ -11,7 +11,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Autowired
     ArtistManagerRepository artistManagerRepository;
 
- //   @Autowired
+    //   @Autowired
 //    public ArtistServiceImpl(ArtistManagerRepository artistManagerRepository) {
 //        this.artistManagerRepository = artistManagerRepository;
 //    }

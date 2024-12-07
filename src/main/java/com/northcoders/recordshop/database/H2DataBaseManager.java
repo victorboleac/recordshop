@@ -11,7 +11,7 @@ public class H2DataBaseManager implements DataBaseManager {
     private final String password = "";
     private final String driverClassName = "org.h2.Driver";
 
-// NOTE: will never call it
+    // NOTE: will never call it
     @Override
     public boolean isAvailable() {
         System.out.println("Is always available");
